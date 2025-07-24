@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://d1m7hvuwc53kn"]
+
+[ext_resource type="Script" uid="uid://51d08w46di4j" path="res://ship.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://bj6c5ov2di8m3" path="res://ship.svg" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://3ehb6s5dadkn" path="res://another_example.gd" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://ddej4qos0mqi2" path="res://star_outline.svg" id="3_h2yge"]
+
+[sub_resource type="Curve" id="Curve_0xm2m"]
+_limits = [0.0, 30.0, 0.0, 1.0]
+_data = [Vector2(0, 23.9395), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_0xm2m"]
+offsets = PackedFloat32Array(0, 0.30622, 0.628389, 1)
+colors = PackedColorArray(0, 0.3, 1, 1, 1, 0.448, 0.08, 1, 1, 0.633333, 0, 1, 1, 0.633333, 0, 0)
+
+[sub_resource type="Curve" id="Curve_lquwl"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Main" type="Node2D"]
+
+[node name="Ship" type="Area2D" parent="."]
+script = ExtResource("1_0xm2m")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Ship"]
+position = Vector2(1, 20)
+amount = 50
+lifetime = 0.3
+local_coords = true
+draw_order = 1
+direction = Vector2(0, 1)
+spread = 8.15
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+scale_amount_curve = SubResource("Curve_0xm2m")
+color_ramp = SubResource("Gradient_0xm2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ship"]
+self_modulate = Color(0, 1, 0.0166667, 1)
+texture = ExtResource("1_ig7tw")
+
+[node name="background" type="Node2D" parent="."]
+position = Vector2(0, -904)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="background"]
+amount = 500
+lifetime = 30.0
+preprocess = 2.95
+emission_shape = 3
+emission_rect_extents = Vector2(1000, 1)
+direction = Vector2(0, 1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 500.0
+scale_amount_max = 5.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AnotherExample" type="Node2D" parent="."]
+script = ExtResource("3_1bvp3")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="AnotherExample"]
+visible = false
+amount = 1000
+texture = ExtResource("3_h2yge")
+lifetime = 5.0
+explosiveness = 0.34
+emission_shape = 1
+emission_sphere_radius = 43.54
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 500)
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_lquwl")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
